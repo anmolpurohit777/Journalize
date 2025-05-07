@@ -22,13 +22,21 @@ public class User {
     @DBRef
     private List<MatrixTask> matrixTasks=new ArrayList<>();
 
-    public User(String id, String email, String username, String password, List<Todo> todos, List<MatrixTask> matrixTasks) {
+    @DBRef
+    private List<TimeBlock> timeBlocks=new ArrayList<>();
+
+    @DBRef
+    private List<Kanban> kanbans=new ArrayList<>();
+
+    public User(List<TimeBlock> timeBlocks, String id, String username, String email, String password, List<Kanban> kanbans, List<MatrixTask> matrixTasks, List<Todo> todos) {
+        this.timeBlocks = timeBlocks;
         this.id = id;
-        this.email = email;
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.todos = todos;
+        this.kanbans = kanbans;
         this.matrixTasks = matrixTasks;
+        this.todos = todos;
     }
 
     public User() {
@@ -80,5 +88,21 @@ public class User {
 
     public void setMatrixTasks(List<MatrixTask> matrixTasks) {
         this.matrixTasks = matrixTasks;
+    }
+
+    public List<TimeBlock> getTimeBlocks() {
+        return timeBlocks;
+    }
+
+    public void setTimeBlocks(List<TimeBlock> timeBlocks) {
+        this.timeBlocks = timeBlocks;
+    }
+
+    public List<Kanban> getKanbans() {
+        return kanbans;
+    }
+
+    public void setKanbans(List<Kanban> kanbans) {
+        this.kanbans = kanbans;
     }
 }
