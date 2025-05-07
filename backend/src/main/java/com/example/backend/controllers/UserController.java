@@ -37,6 +37,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> checkUserExists(@PathVariable String email) {
+        Optional<User> user = userService.getUserByEmail(email);
+        return new ResponseEntity<>(user.orElse(null), HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User user)
     {

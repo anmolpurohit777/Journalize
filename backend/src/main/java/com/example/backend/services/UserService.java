@@ -29,11 +29,29 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> getUserByEmail(String email)
+    {
+        return userRepository.findByEmail(email);
+    }
+
     public User updateUser(String id, User user)
     {
         if (userRepository.existsById(id)) {
-            user.setId(id);
-            return userRepository.save(user);
+            User existingUser = userRepository.findById(id).orElse(null);
+
+            if (existingUser != null) {
+                if (user.getUsername() != null) {
+                    existingUser.setUsername(user.getUsername());
+                }
+                if (user.getEmail() != null) {
+                    existingUser.setEmail(user.getEmail());
+                }
+                if (user.getPassword() != null) {
+                    existingUser.setPassword(user.getPassword());
+                }
+
+                return userRepository.save(existingUser);
+            }
         }
         return null;
     }

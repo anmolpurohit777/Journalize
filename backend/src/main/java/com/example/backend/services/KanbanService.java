@@ -63,7 +63,6 @@ public class KanbanService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Kanban task not found"));
 
-        kanbanToUpdate.setDescription(updatedKanban.getDescription());
         kanbanToUpdate.setStatus(updatedKanban.getStatus());
         kanbanRepository.save(kanbanToUpdate);
         return kanbanToUpdate;
