@@ -28,15 +28,19 @@ public class User {
     @DBRef
     private List<Kanban> kanbans=new ArrayList<>();
 
-    public User(List<TimeBlock> timeBlocks, String id, String username, String email, String password, List<Kanban> kanbans, List<MatrixTask> matrixTasks, List<Todo> todos) {
-        this.timeBlocks = timeBlocks;
+    @DBRef
+    private List<DailyLog> dailyLogs=new ArrayList<>();
+
+    public User(String id, String username, String email, String password, List<Todo> todos, List<MatrixTask> matrixTasks, List<TimeBlock> timeBlocks, List<Kanban> kanbans, List<DailyLog> dailyLogs) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.kanbans = kanbans;
-        this.matrixTasks = matrixTasks;
         this.todos = todos;
+        this.matrixTasks = matrixTasks;
+        this.timeBlocks = timeBlocks;
+        this.kanbans = kanbans;
+        this.dailyLogs = dailyLogs;
     }
 
     public User() {
@@ -104,5 +108,13 @@ public class User {
 
     public void setKanbans(List<Kanban> kanbans) {
         this.kanbans = kanbans;
+    }
+
+    public List<DailyLog> getDailyLogs() {
+        return dailyLogs;
+    }
+
+    public void setDailyLogs(List<DailyLog> dailyLogs) {
+        this.dailyLogs = dailyLogs;
     }
 }
