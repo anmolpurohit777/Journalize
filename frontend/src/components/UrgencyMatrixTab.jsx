@@ -124,20 +124,6 @@ const UrgencyMatrixTab = () => {
 
                 <ul className="space-y-3">
                   {grouped[prio.id]?.map((task) => (
-                    // <li
-                    //   key={task.id}
-                    //   draggable
-                    //   onDragStart={() => onDragStart(task)}
-                    //   className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 flex justify-between items-center shadow-sm cursor-grab hover:shadow-md transition"
-                    // >
-                    //   <span>{task.description}</span>
-                    //   <button
-                    //     onClick={() => handleDelete(task.id)}
-                    //     className="text-gray-400 hover:text-white text-lg"
-                    //   >
-                    //     ✕
-                    //   </button>
-                    // </li>
                     <li
                       key={task.id}
                       draggable

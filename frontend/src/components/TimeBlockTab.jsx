@@ -78,17 +78,15 @@ const TimeBlockTab = () => {
       <Sidebar />
   
       <div className="flex-1 p-8 overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-blue-400 mb-6 text-center">Time Blocks</h1>
-          <button
-            onClick={() => setShowModal(true)}
-            className="px-4 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700"
-          >
-            ＋ Add Block
-          </button>
-        </div>
-  
-        {/* Timeline */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-blue-400 mb-6 text-center flex-1">Time Blocks</h1>
+        <button
+          onClick={() => setShowModal(true)}
+          className="px-4 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700"
+        >
+          ＋ Add Block
+        </button> 
+      </div>
         <div className="relative border-l border-gray-700 h-[1083px] ml-8">
           {timeOptions.map((time) => (
             <div
@@ -99,7 +97,6 @@ const TimeBlockTab = () => {
             </div>
           ))}
   
-          {/* Render Time Blocks */}
           {blocks.map((block) => {
             const top = ((parseTime(block.startTime) - 300) / 30) * 32;
             const height =
@@ -131,7 +128,6 @@ const TimeBlockTab = () => {
         </div>
       </div>
   
-      {/* Modal for Adding Task */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
           <div className="bg-gray-900 rounded-2xl p-6 w-96 shadow-xl border border-gray-700">

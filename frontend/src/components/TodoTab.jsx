@@ -96,7 +96,6 @@ const TodoTab = () => {
         <div className="w-full max-w-2xl">
           <h1 className="text-3xl font-bold text-blue-400 mb-6 text-center">Todos</h1>
   
-          {/* Input */}
           <div className="flex items-center gap-2 mb-6">
             <input
               value={input}
@@ -113,7 +112,6 @@ const TodoTab = () => {
           </div>
   
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Incomplete Tasks */}
           <div>
             <h2 className="text-lg font-semibold text-white mb-3">Incomplete Tasks</h2>
             <ul className="space-y-2">
@@ -143,7 +141,6 @@ const TodoTab = () => {
             </ul>
           </div>
 
-          {/* Completed Tasks */}
           <div>
             <h2 className="text-lg font-semibold text-white mb-3">Completed Tasks</h2>
             <ul className="space-y-2">

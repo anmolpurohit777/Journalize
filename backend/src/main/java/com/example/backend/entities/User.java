@@ -31,7 +31,10 @@ public class User {
     @DBRef
     private List<DailyLog> dailyLogs=new ArrayList<>();
 
-    public User(String id, String username, String email, String password, List<Todo> todos, List<MatrixTask> matrixTasks, List<TimeBlock> timeBlocks, List<Kanban> kanbans, List<DailyLog> dailyLogs) {
+    @DBRef
+    private List<CountdownGoal> countdownGoals=new ArrayList<>();
+
+    public User(String id, String username, String email, String password, List<Todo> todos, List<MatrixTask> matrixTasks, List<TimeBlock> timeBlocks, List<Kanban> kanbans, List<DailyLog> dailyLogs, List<CountdownGoal> countdownGoals) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -41,6 +44,7 @@ public class User {
         this.timeBlocks = timeBlocks;
         this.kanbans = kanbans;
         this.dailyLogs = dailyLogs;
+        this.countdownGoals = countdownGoals;
     }
 
     public User() {
@@ -116,5 +120,13 @@ public class User {
 
     public void setDailyLogs(List<DailyLog> dailyLogs) {
         this.dailyLogs = dailyLogs;
+    }
+
+    public List<CountdownGoal> getCountdownGoals() {
+        return countdownGoals;
+    }
+
+    public void setCountdownGoals(List<CountdownGoal> countdownGoals) {
+        this.countdownGoals = countdownGoals;
     }
 }
