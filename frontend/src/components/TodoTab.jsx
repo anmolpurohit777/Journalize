@@ -59,6 +59,14 @@ const TodoTab = () => {
         description : todo.description,
         completed: !todo.completed,
       });
+
+      await axios.post(`http://localhost:8080/api/users/${userId}/daily-logs`, {
+        completedTodos: [todo.description],
+        kanbanActivity: [],                  
+        completedUrgentTasks: [],           
+        journalEntry: "",
+      });
+
       fetchTodos();
     } catch (error) {
       console.error("Error updating todo:", error);

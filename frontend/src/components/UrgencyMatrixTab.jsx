@@ -59,6 +59,27 @@ const UrgencyMatrixTab = () => {
     }
   };
 
+  const handleToggle = async (task) => {
+    try {
+      const updated = { ...task, completed: !task.completed };
+      await axios.put(`http://localhost:8080/api/users/${userId}/matrix/${task.id}`, updated);
+      fetchTasks();
+  
+      if ((task.quadrant === 1 || task.quadrant === 2) && updated.completed) {
+        const activity = `${task.description} marked as Completed`;
+        await axios.post(`http://localhost:8080/api/users/${userId}/daily-logs`, {
+          completedTodos: [],
+          kanbanActivity: [],
+          completedUrgentTasks: [activity],
+          journalEntry: activity,
+        });
+      }
+    } catch (err) {
+      console.error("Failed to toggle task", err);
+    }
+  };
+  
+
   const handleDelete = async (taskId) => {
     try {
       await axios.delete(`http://localhost:8080/api/users/${userId}/matrix/${taskId}`);
@@ -103,13 +124,37 @@ const UrgencyMatrixTab = () => {
 
                 <ul className="space-y-3">
                   {grouped[prio.id]?.map((task) => (
+                    // <li
+                    //   key={task.id}
+                    //   draggable
+                    //   onDragStart={() => onDragStart(task)}
+                    //   className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 flex justify-between items-center shadow-sm cursor-grab hover:shadow-md transition"
+                    // >
+                    //   <span>{task.description}</span>
+                    //   <button
+                    //     onClick={() => handleDelete(task.id)}
+                    //     className="text-gray-400 hover:text-white text-lg"
+                    //   >
+                    //     ✕
+                    //   </button>
+                    // </li>
                     <li
                       key={task.id}
                       draggable
                       onDragStart={() => onDragStart(task)}
-                      className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 flex justify-between items-center shadow-sm cursor-grab hover:shadow-md transition"
+                      className={`bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 flex justify-between items-center shadow-sm cursor-grab hover:shadow-md transition`}
                     >
-                      <span>{task.description}</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={task.completed}
+                          onChange={() => handleToggle(task)}
+                          className="accent-blue-500"
+                        />
+                        <span className={task.completed ? "line-through text-gray-400" : ""}>
+                          {task.description}
+                        </span>
+                      </div>
                       <button
                         onClick={() => handleDelete(task.id)}
                         className="text-gray-400 hover:text-white text-lg"

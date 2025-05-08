@@ -128,6 +128,8 @@ public class GenerateService {
     }
 
     @Scheduled(cron = "0 0 22 * * ?")
+//    @Scheduled(cron = "0 */5 * * * ?")
+//    @Scheduled(cron = "0 * * * * ?")
     public void callGeminiApi() {
         String userId = "681ac3e662b36c4daf5ed916";
         String todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -137,7 +139,8 @@ public class GenerateService {
             String journalPrompt = generateJournalPrompt(dailyLog);
             generateContent(journalPrompt).subscribe(journalEntry -> {
                 dailyLog.setJournalEntry(journalEntry);
-                dailyLogRepository.save(dailyLog); // Save updated DailyLog back to DB
+                dailyLogRepository.save(dailyLog);
+                System.out.println(journalEntry);
             });
         } else {
             System.out.println("No DailyLog found for the user on " + todayDate);
@@ -156,25 +159,67 @@ public class GenerateService {
         return null;
     }
 
-    private String generateJournalPrompt(DailyLog dailyLog) {
-        StringBuilder prompt = new StringBuilder();
-        prompt.append("Using the following user productivity data, generate a daily journal entry in pure Markdown format. The journal should summarize the day clearly and concisely. Use headings, bullet points, and emphasis where appropriate. Do not include any explanations or text outside the Markdown format.\n\n");
+//    private String generateJournalPrompt(DailyLog dailyLog) {
+//        StringBuilder prompt = new StringBuilder();
+//        prompt.append("Using the following user productivity data, generate a daily journal entry in pure Markdown format. The journal should summarize the day clearly and concisely. Use headings, bullet points, and emphasis where appropriate. Do not include any explanations or text outside the Markdown format.\n\n");
+//
+//        prompt.append("### Data:\n");
+//
+//        prompt.append("- Completed Todos:\n");
+//        dailyLog.getCompletedTodos().forEach(todo -> prompt.append("  - ").append(todo).append("\n"));
+//
+//        prompt.append("- Kanban Card Moves:\n");
+//        dailyLog.getKanbanActivity().forEach(kanban -> prompt.append("  - ").append(kanban).append("\n"));
+//
+//        prompt.append("- Urgent and Important tasks Completed:\n");
+//        dailyLog.getCompletedUrgentTasks().forEach(kanban -> prompt.append("  - ").append(kanban).append("\n"));
+//
+//        prompt.append("\nMake sure the output is **valid Markdown only**.\n");
+//
+//        return prompt.toString();
+//    }
+private String generateJournalPrompt(DailyLog dailyLog) {
+    StringBuilder prompt = new StringBuilder();
+    prompt.append("Using the following user productivity data, create a detailed, creative, and humanized daily journal entry in pure Markdown format. The journal should feel like a reflective and insightful report of the day, not just a dry summary. Use headings, bullet points, subheadings, quotes, emphasis, and other Markdown features to enhance readability and appeal. The tone should be warm, reflective, and personal.\n\n");
+    prompt.append("Maintain Proper formatting throughout the response\n\n");
+    prompt.append(dailyLog.getDate()).append("\n\n");
+    prompt.append("First write a daily quote\n\n");
 
-        prompt.append("### Data:\n");
+    prompt.append("Overview\n");
+    prompt.append("Write Overview of the Day using given data.\n\n");
 
-        prompt.append("- Completed Todos:\n");
-        dailyLog.getCompletedTodos().forEach(todo -> prompt.append("  - ").append(todo).append("\n"));
-
-        prompt.append("- Kanban Card Moves:\n");
-        dailyLog.getKanbanActivity().forEach(kanban -> prompt.append("  - ").append(kanban).append("\n"));
-
-        prompt.append("- Urgent and Important tasks Completed:\n");
-        dailyLog.getCompletedUrgentTasks().forEach(kanban -> prompt.append("  - ").append(kanban).append("\n"));
-
-        prompt.append("\nMake sure the output is **valid Markdown only**.\n");
-
-        return prompt.toString();
+    if (!dailyLog.getCompletedTodos().isEmpty()) {
+        prompt.append("Completed Todos\n");
+        prompt.append("The following todos were successfully completed today:\n");
+        dailyLog.getCompletedTodos().forEach(todo -> prompt.append("-").append(todo).append("\n"));
+        prompt.append("\n");
     }
+
+    if (!dailyLog.getKanbanActivity().isEmpty()) {
+        prompt.append("Kanban Board Updates\n");
+        prompt.append("Here’s how my Kanban board looked after today’s work:\n");
+        dailyLog.getKanbanActivity().forEach(kanban -> prompt.append("-").append(kanban).append("\n"));
+        prompt.append("\n");
+    }
+
+    if (!dailyLog.getCompletedUrgentTasks().isEmpty()) {
+        prompt.append("Urgent & Important Tasks\n");
+        prompt.append("I completed the following critical tasks that were urgent and important:\n");
+        dailyLog.getCompletedUrgentTasks().forEach(task -> prompt.append("-Completed: ").append(task).append("\n"));
+        prompt.append("\n");
+    }
+
+    prompt.append("Detailed Work Breakdown\n");
+    prompt.append("Give detailed work breakdown\n\n");
+
+    prompt.append("End of the Day Reflection\n");
+
+    prompt.append("Give result in only markdown format, dont add anything else\n");
+
+
+    return prompt.toString();
+}
+
 
     public Mono<String> generateContent(String userPrompt) {
         Map<String, Object> requestBody = Map.of(

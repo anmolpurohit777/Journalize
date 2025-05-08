@@ -45,6 +45,7 @@ const KanbanTab = () => {
   const handleDrop = (e, status) => {
     const cardId = e.dataTransfer.getData('cardId');
     const userId = localStorage.getItem('userId');
+    const card = kanbans.find(k => k.id === cardId);
 
     axios.put(`http://localhost:8080/api/users/${userId}/kanbans/${cardId}`, {
       status
@@ -52,6 +53,14 @@ const KanbanTab = () => {
       setKanbans(prev => prev.map(card =>
         card.id === cardId ? { ...card, status } : card
       ));
+    }).catch(err => console.error(err));
+
+    const activity = `${card.description} moved from ${card.status} to ${status}`;
+    axios.post(`http://localhost:8080/api/users/${userId}/daily-logs`, {
+      completedTodos: [],
+      kanbanActivity: [activity],
+      completedUrgentTasks: [],
+      journalEntry: activity
     }).catch(err => console.error(err));
   };
 

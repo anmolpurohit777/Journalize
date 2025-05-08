@@ -35,7 +35,7 @@ public class DailyLogService {
             log.getKanbanActivity().addAll(dailyLogInput.getKanbanActivity());
             log.getCompletedUrgentTasks().addAll(dailyLogInput.getCompletedUrgentTasks());
 
-            log.setJournalEntry(dailyLogInput.getJournalEntry());
+            log.setJournalEntry(existingLogOpt.get().getJournalEntry());
         } else {
             log = new DailyLog();
             log.setDate(todayDate);

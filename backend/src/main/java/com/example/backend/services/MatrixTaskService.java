@@ -68,6 +68,8 @@ public class MatrixTaskService {
 
         taskToUpdate.setDescription(updatedTask.getDescription());
         taskToUpdate.setQuadrant(updatedTask.getQuadrant());
+        taskToUpdate.setCompleted(updatedTask.isCompleted());
+
         matrixTaskRepository.save(taskToUpdate);
         return taskToUpdate;
     }

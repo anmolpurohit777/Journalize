@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   const navItems = [
     { name: 'Home', path: '/home' },
+    { name: 'Journal', path: '/journal' },
     { name: 'Todos', path: '/todos' },
     { name: 'Kanban', path: '/kanban' },
     { name: 'Urgency Matrix', path: '/urgency-matrix' },

@@ -11,11 +11,14 @@ public class MatrixTask {
 
     private String description;
     private Integer quadrant;
+    private boolean completed = false;
 
-    public MatrixTask(String id, Integer quadrant, String description) {
+
+    public MatrixTask(String id, String description, Integer quadrant, boolean completed) {
         this.id = id;
-        this.quadrant = quadrant;
         this.description = description;
+        this.quadrant = quadrant;
+        this.completed = completed;
     }
 
     public MatrixTask() {
@@ -43,5 +46,13 @@ public class MatrixTask {
 
     public void setQuadrant(Integer quadrant) {
         this.quadrant = quadrant;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

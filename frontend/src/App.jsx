@@ -7,6 +7,7 @@ import UrgencyMatrixTab from './components/UrgencyMatrixTab';
 import TimeBlockTab from './components/TimeBlockTab';
 import Login from './components/Login';
 import Signup from './components/SignUp';
+import Journal from './components/Journal';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/journal" element={<Journal />} />
             <Route path="/todos" element={<TodoTab />} />
             <Route path="/kanban" element={<KanbanTab />} />
             <Route path="/urgency-matrix" element={<UrgencyMatrixTab />} />
