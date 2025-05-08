@@ -37,7 +37,7 @@ public class GenerateService {
 //    @Scheduled(cron = "0 */5 * * * ?")
 //    @Scheduled(cron = "0 * * * * ?")
     public void callGeminiApi() {
-        String userId = "681ac3e662b36c4daf5ed916";
+        String userId = "681ac3e662b36c4daf5ed916";     // Currently Generating Journal for only 1 user, using for-loop on User's List we can generate for all
         String todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         DailyLog dailyLog = findDailyLogForUser(userId, todayDate);
 

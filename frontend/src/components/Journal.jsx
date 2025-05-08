@@ -18,7 +18,7 @@ const Journal = () => {
   const [error, setError] = useState('');
 
   const userId = localStorage.getItem("userId");
-  const date = '2025-05-08';
+  const date = new Date().toISOString().split('T')[0];
 
   const parseMarkdown = (markdown) => {
     const lines = markdown.split('\n');
