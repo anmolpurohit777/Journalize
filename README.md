@@ -43,8 +43,6 @@ This data is used to generate a personalized journal entry per user, which is th
 
 ## 🔮 Future Enhancements
 
-User login & authentication
-
 - Mobile app version
 - Weekly/Monthly journal summaries
 - Pomodoro Timer for focused sessions
